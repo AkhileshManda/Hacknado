@@ -1,2 +1,3 @@
 # ignore the models directory
 models/
+config/tweepy_config.json

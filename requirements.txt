@@ -1,0 +1,6 @@
+flask
+tensorflow
+spacy
+nltk
+pandas
+tweepy

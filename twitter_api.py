@@ -2,13 +2,14 @@ import tweepy
 from tweepy import Client
 import pandas as pd
 
-
 #Installation / Access to Twitter account
-consumer_key = 'JPPxbx7JO5kjtSvf42nTrIpQd' #api key
-consumer_secret = 'gUlhcQ5GZfw2AJx3mNfESatyT5z8vF1ufm6RUC4McR2Zk5GqJJ' #api key secret
-bearer_token = "AAAAAAAAAAAAAAAAAAAAADzJTgEAAAAA5KGUizcxvi0CzaKGivZbuz4HsWY%3DCvXWJPmZz6C1txZlCEyOqe7PZX5o7FUBeuNCS5fNW9NXdmGic2"
-access_token = '773944734070996992-iFUMZYrV1WO9oNuKpyO9ItirotdKoIg'
-access_token_secret = '7m6rXWgqexVRVJwYdp78ix3IomrxmHPP5NLMUGYHwr1Gb'
+
+# remove all the keys from the above variables
+consumer_key = ''
+consumer_secret = ''
+bearer_token = ''
+access_token = ''
+access_token_secret = ''
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
