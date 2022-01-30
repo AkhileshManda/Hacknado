@@ -16,6 +16,8 @@ def get_event():
     event_id = request.args.get('event_id')
 
     data = db.loc[db['event_id'] == int(event_id)].iloc[0].to_dict()
+    data["recent_tweets"] = data["recent_tweets"].split("|")
+    data["event_status"] = data["status_update"].split("|")
 
     return jsonify(data)
 
