@@ -41,7 +41,7 @@ def create_event():
 
     event_id = random.randint(100000, 999999)
 
-    db = db.append({
+    update_db({
         'event_id': event_id,
         'relevent_hashtags': hashtags,
         'event_location': event_location,
@@ -49,7 +49,31 @@ def create_event():
         'event_type': event_type,
         "recent_tweets": "",
         "is_active": True
-    }, ignore_index=True)
+    })
+
+    return jsonify({
+        'event_id': event_id,
+        'event_name': 'Event Name',
+        'event_description': 'Event Description',
+        'event_location': 'Event Location',
+        'event_date': 'Event Date',
+        'event_time': 'Event Time',
+        'tweets_list': [
+            "1487385441292754946",
+            "1486846468887560201",
+            "1487295769749168128",
+            "1486827458632503297",
+            "1486753860555358216"
+        ]
+    })
+
+@app.route("/list")
+def list():
+    items = {}
+    for i in db.index:
+        items[i] = db.loc[i].to_dict()
+    
+    return jsonify(items)
 
 # Eg: /untrack/<id>
 @app.route("/untract")
@@ -62,7 +86,7 @@ db = pd.read_csv("./data/data.csv")
 def update_db(_dict):
     db = db.append(_dict, ignore_index=True)
     db.to_csv("./data/data.csv", index=False)
-
+    pass
 # run the server
 if __name__ == '__main__':
     app.run(debug=True)
