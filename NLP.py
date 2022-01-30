@@ -45,6 +45,12 @@ class NLP:
 
         return text
     
+    def preprocess_spacy(self, text):
+        text = text.lower()
+        text = self.strip_all_entities(self.strip_links(text))
+    
+        return text
+
     def load_bert(self, weights_path):
         bert = TFAutoModel.from_pretrained('bert-base-cased')
         input_ids = keras.layers.Input(shape=(self.seq_len,), name="input_ids", dtype="int32")
@@ -92,7 +98,7 @@ class NLP:
 
     def process_spacy(self, texts):
         assert type(texts) == list
-        # texts = [self.preprocess(text) for text in texts]
+        texts = [self.preprocess_spacy(text) for text in texts]
 
         labels = []
         for text in texts:
