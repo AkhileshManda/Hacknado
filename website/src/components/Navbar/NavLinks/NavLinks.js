@@ -12,9 +12,6 @@ const NavLinks = () => {
       <Link to="/" className={navHome}>
         Home
       </Link>
-      <Link to="/tweets" className={navClass}>
-        Tweets
-      </Link>
       <Link to="/events" className={navClass}>
         Events
       </Link>

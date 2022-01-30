@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import random
 import pandas as pd
+from twitter_watcher import TwitterWatcher
 
 app = Flask(__name__)
 CORS(app)
@@ -16,23 +17,11 @@ def index():
 def get_event():
     event_id = request.args.get('event_id')
 
-    temp_data = {
-        'event_id': event_id,
-        'event_name': 'Event Name',
-        'event_description': 'Event Description',
-        'event_location': 'Event Location',
-        'event_date': 'Event Date',
-        'event_time': 'Event Time',
-        'tweets_list': [
-            "1487385441292754946",
-            "1486846468887560201",
-            "1487295769749168128",
-            "1486827458632503297",
-            "1486753860555358216"
-        ]
-    }
+    data = db.loc[db['event_id'] == int(event_id)].iloc[0].to_dict()
+    data["recent_tweets"] = data["recent_tweets"].split("|")
+    data["event_status"] = data["status_update"].split("|")
 
-    return jsonify(temp_data)
+    return jsonify(data)
 
 @app.route("/create_event", methods=['POST'])
 def create_event():
@@ -53,21 +42,7 @@ def create_event():
         "is_active": True
     })
 
-    return jsonify({
-        'event_id': event_id,
-        'event_name': 'Event Name',
-        'event_description': 'Event Description',
-        'event_location': 'Event Location',
-        'event_date': 'Event Date',
-        'event_time': 'Event Time',
-        'tweets_list': [
-            "1487385441292754946",
-            "1486846468887560201",
-            "1487295769749168128",
-            "1486827458632503297",
-            "1486753860555358216"
-        ]
-    })
+    return "Event Created"
 
 @app.route("/list")
 def list():
@@ -79,9 +54,9 @@ def list():
 
 # Eg: /untrack/<id>
 @app.route("/untract")
-def update_event():
+def untract_event():
     event_id = request.args.get('event_id')
-    db.loc[db['event_id'] == event_id, 'is_active'] = "no"
+    db.loc[db['event_id'] == int(event_id), 'is_active'] = "no"
     return "Event untracked"
 
 db = pd.read_csv("./data/data.csv")
@@ -91,4 +66,6 @@ def update_db(_dict):
     pass
 # run the server
 if __name__ == '__main__':
+    watcher = Twitter_Watcher("./data/data.csv")
+    watcher.start()
     app.run(debug=True)
