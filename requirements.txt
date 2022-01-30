@@ -4,3 +4,4 @@ spacy
 nltk
 pandas
 tweepy
+transformer
