@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import random
 import pandas as pd
 
 app = Flask(__name__)
+CORS(app)
 
 # PUT YOUR WEBSITE STUFF IN THE TEMPLATES DIRECTORY
 
